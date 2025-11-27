@@ -1,4 +1,4 @@
-package com.medi.flow.controller;
+package com.medi.flow.controller.authentication;
 
 import com.medi.flow.dto.user.LoginDTO;
 import com.medi.flow.dto.user.ResetPasswordDTO;

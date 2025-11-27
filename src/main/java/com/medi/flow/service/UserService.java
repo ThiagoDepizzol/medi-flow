@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public final UserRepository userRepository;
@@ -22,28 +23,26 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User created(@NotNull final User user) {
+    public Optional<User> created(@NotNull final User user) {
 
-        logger.info("created -> {}", user);
+        logger.info("created() -> {}", user);
 
-        return Optional.of(userRepository.save(user))
-                .orElseThrow(() -> new IllegalStateException("Error creating a new user."));
+        return Optional.of(userRepository.save(user));
 
     }
 
-    public User update(@NotNull final Long id, @NotNull final User user) {
+    public Optional<User> update(@NotNull final Long id, @NotNull final User user) {
 
-        logger.info("update -> {}, {}", id, user);
+        logger.info("update() -> {}, {}", id, user);
 
-        return Optional.of(userRepository.save(user))
-                .orElseThrow(() -> new IllegalStateException("Error updating an existing user."));
+        return Optional.of(userRepository.save(user));
 
     }
 
     @Transactional(readOnly = true)
     public Page<User> findAll(@NotNull final Pageable pageable) {
 
-        logger.info("findAll -> {}", pageable);
+        logger.info("findAll() -> {}", pageable);
 
         return userRepository.findAllByActiveTrue(pageable);
     }
@@ -51,8 +50,19 @@ public class UserService {
     @Transactional(readOnly = true)
     public Optional<User> findById(@NotNull final Long id) {
 
-        logger.info("findById -> {}", id);
+        logger.info("findById() -> {}", id);
 
         return userRepository.findOneActiveTrueById(id);
+    }
+
+
+    public void delete(@NotNull final User user) {
+
+        logger.info("delete() -> {}", user);
+
+        user.setActive(false);
+
+        userRepository.save(user);
+
     }
 }
