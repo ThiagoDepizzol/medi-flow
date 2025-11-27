@@ -1,0 +1,11 @@
+active,created_date,created_by,last_modified_date,last_modified_by,first_name,last_name,email,password,activated
+true,2025-01-10T10:15:00,system,2025-01-10T10:15:00,system,Ana,Silva,ana.silva@fiap.com,$2a$10$abcdef1234567890abcdef1234567890abcdef1234567890abcd,false
+true,2025-01-11T09:20:00,system,2025-01-11T09:20:00,system,Bruno,Souza,bruno.souza@fiap.com,$2a$10$1234567890abcdef1234567890abcdef1234567890abcdef12,false
+true,2025-01-12T14:05:00,system,2025-01-12T14:05:00,system,Carla,Pereira,carla.pereira@fiap.com,$2a$10$ffeeddccbbaa99887766554433221100aabbccddeeff112233,false
+true,2025-01-13T08:45:00,system,2025-01-13T08:45:00,system,Diego,Almeida,diego.almeida@fiap.com,$2a$10$aa11bb22cc33dd44ee55ff6677889900aa11bb22cc33dd44ee,false
+true,2025-01-14T16:30:00,system,2025-01-14T16:30:00,system,Elisa,Martins,elisa.martins@fiap.com,$2a$10$5566778899aabbccddeeff00112233445566778899aabbccdd,false
+true,2025-01-15T11:10:00,system,2025-01-15T11:10:00,system,Felipe,Teixeira,felipe.teixeira@fiap.com,$2a$10$0099887766554433221100ffeeddccbbaa9988776655443322,false
+true,2025-01-16T12:25:00,system,2025-01-16T12:25:00,system,Gabriela,Lima,gabriela.lima@fiap.com,$2a$10$11223344556677889900aabbccddeeff112233445566778899,false
+true,2025-01-17T15:40:00,system,2025-01-17T15:40:00,system,Henrique,Rocha,henrique.rocha@fiap.com,$2a$10$a1b2c3d4e5f6071827364556677889900aabbccddeeff001122,false
+true,2025-01-18T18:00:00,system,2025-01-18T18:00:00,system,Isabela,Ramos,isabela.ramos@fiap.com,$2a$10$ff11ee22dd33cc44bb55aa6677889900ccddeeff1122334455,false
+true,2025-01-19T13:15:00,system,2025-01-19T13:15:00,system,João,Barbosa,joao.barbosa@fiap.com,$2a$10$223344556677889900aabbccddeeff11223344556677889900,false

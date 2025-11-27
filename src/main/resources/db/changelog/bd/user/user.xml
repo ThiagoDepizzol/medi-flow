@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet id="7d538ffb-1b9e-46b6-8591-2558d35ee284" author="thiagoDepizzol">
+        <createTable tableName="usr_users">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_date" type="datetime"/>
+
+            <column name="created_by" type="varchar(255)"/>
+
+            <column name="last_modified_date" type="datetime"/>
+
+            <column name="last_modified_by" type="varchar(255)"/>
+
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="activated" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="c91c8497-6512-406b-b97f-dcb98df25fb3" author="thiagoDepizzol">
+        <loadData file="classpath:data/user.csv"
+                  separator=","
+                  tableName="usr_users"/>
+    </changeSet>
+
+</databaseChangeLog>

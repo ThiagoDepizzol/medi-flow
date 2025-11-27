@@ -18,16 +18,17 @@ public abstract class BaseEntity {
     private Boolean active;
 
     @CreatedDate
-    private Instant createdAt;
+    private Instant createdDate;
 
     @CreatedBy
     private String createdBy;
 
+    @LastModifiedDate
+    private Instant lastModifiedDate;
+
     @LastModifiedBy
     private String lastModifiedBy;
 
-    @LastModifiedDate
-    private Instant lastModifiedDate;
 
     public BaseEntity() {
     }
@@ -40,12 +41,12 @@ public abstract class BaseEntity {
         this.active = active;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getCreatedBy() {
@@ -56,19 +57,19 @@ public abstract class BaseEntity {
         this.createdBy = createdBy;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
     public Instant getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }
