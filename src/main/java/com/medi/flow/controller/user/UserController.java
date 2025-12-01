@@ -3,7 +3,7 @@ package com.medi.flow.controller.user;
 import com.medi.flow.dto.user.UserDTO;
 import com.medi.flow.entity.user.User;
 import com.medi.flow.mapper.user.UserMapper;
-import com.medi.flow.service.UserService;
+import com.medi.flow.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;

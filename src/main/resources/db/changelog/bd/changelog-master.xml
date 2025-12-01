@@ -3,6 +3,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
 
-    <include file="db/changelog/bd/user/user.xml"/>
+    <include file="/db/changelog/bd/user/261120252010_User.xml"/>
+
+    <include file="/db/changelog/bd/user/301120251420_UserAuthority.xml"/>
+
+    <include file="/db/changelog/bd/administrative/301120251415_Role.xml"/>
 
 </databaseChangeLog>

@@ -1,4 +1,4 @@
-package com.medi.flow.dto.user;
+package com.medi.flow.dto.login;
 
 public class ResetPasswordDTO {
 }

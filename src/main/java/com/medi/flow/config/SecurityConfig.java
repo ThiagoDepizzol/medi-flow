@@ -1,7 +1,7 @@
 package com.medi.flow.config;
 
 import com.medi.flow.entity.user.User;
-import com.medi.flow.repository.UserRepository;
+import com.medi.flow.repository.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

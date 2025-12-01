@@ -1,4 +1,4 @@
-package com.medi.flow.repository;
+package com.medi.flow.repository.user;
 
 import com.medi.flow.entity.user.User;
 import org.springframework.data.domain.Page;

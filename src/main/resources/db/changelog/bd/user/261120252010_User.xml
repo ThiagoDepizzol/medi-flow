@@ -10,10 +10,6 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="active" type="boolean">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="created_date" type="datetime"/>
 
             <column name="created_by" type="varchar(255)"/>
@@ -21,6 +17,10 @@
             <column name="last_modified_date" type="datetime"/>
 
             <column name="last_modified_by" type="varchar(255)"/>
+
+            <column name="active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
 
             <column name="first_name" type="varchar(255)">
                 <constraints nullable="false"/>

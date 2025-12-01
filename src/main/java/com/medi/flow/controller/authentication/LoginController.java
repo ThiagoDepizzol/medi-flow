@@ -1,7 +1,7 @@
 package com.medi.flow.controller.authentication;
 
-import com.medi.flow.dto.user.LoginDTO;
-import com.medi.flow.dto.user.ResetPasswordDTO;
+import com.medi.flow.dto.login.LoginDTO;
+import com.medi.flow.dto.login.ResetPasswordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

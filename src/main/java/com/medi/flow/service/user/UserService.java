@@ -1,7 +1,7 @@
-package com.medi.flow.service;
+package com.medi.flow.service.user;
 
 import com.medi.flow.entity.user.User;
-import com.medi.flow.repository.UserRepository;
+import com.medi.flow.repository.user.UserRepository;
 import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
