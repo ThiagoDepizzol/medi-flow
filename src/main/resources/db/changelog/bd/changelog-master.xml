@@ -9,4 +9,6 @@
 
     <include file="/db/changelog/bd/administrative/301120251415_Role.xml"/>
 
+    <include file="/db/changelog/bd/administrative/301120252323_Module.xml"/>
+
 </databaseChangeLog>

@@ -16,8 +16,11 @@ public class ModuleTypeService {
 
     private final RoleService roleService;
 
-    public ModuleTypeService(final RoleService roleService) {
+    private final ModuleService moduleService;
+
+    public ModuleTypeService(final RoleService roleService, final ModuleService moduleService) {
         this.roleService = roleService;
+        this.moduleService = moduleService;
     }
 
     public void verifyIfExistNewModuleType() {
@@ -26,9 +29,7 @@ public class ModuleTypeService {
 
         List.of(ModuleType.values())
                 .forEach(type -> roleService.findOneByNameAndPrefix(type.getName(), type.getPrefix())
-                        .ifPresentOrElse(moduleType -> {
-                                    // TODO: Implementar ModuleService
-                                },
+                        .ifPresentOrElse(moduleService::verifyIfExistModuleWithType,
                                 () -> {
 
                                     final Role newRole = new Role();

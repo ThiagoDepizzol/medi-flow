@@ -3,8 +3,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
 
-    <changeSet id="7d538ffb-1b9e-46b6-8591-2558d35ee284" author="thiagoDepizzol">
-        <createTable tableName="usr_users">
+    <changeSet id="a7897759-4c48-4362-ad23-c05249e08c22" author="thiagoDepizzol">
+        <createTable tableName="adm_modules">
 
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -22,33 +22,37 @@
 
             <column name="last_modified_by" type="varchar(255)"/>
 
-            <column name="first_name" type="varchar(255)">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="last_name" type="varchar(255)">
+            <column name="adm_role_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="email" type="varchar(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-
-            <column name="password" type="varchar(255)">
+            <column name="status" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="activated" type="boolean">
+            <column name="description" type="text"/>
+
+            <column name="view" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="edit" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="delete" type="boolean">
                 <constraints nullable="false"/>
             </column>
 
         </createTable>
-    </changeSet>
-
-    <changeSet id="c91c8497-6512-406b-b97f-dcb98df25fb3" author="thiagoDepizzol">
-        <loadData file="classpath:data/user.csv"
-                  separator=","
-                  tableName="usr_users"/>
     </changeSet>
 
 </databaseChangeLog>
