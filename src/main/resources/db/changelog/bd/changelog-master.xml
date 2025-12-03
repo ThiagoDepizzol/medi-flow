@@ -11,4 +11,6 @@
 
     <include file="/db/changelog/bd/administrative/301120252323_Module.xml"/>
 
+    <include file="/db/changelog/bd/consultation/021220252136_Consultation.xml"/>
+
 </databaseChangeLog>

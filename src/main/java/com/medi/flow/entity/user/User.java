@@ -1,5 +1,6 @@
 package com.medi.flow.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.medi.flow.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,9 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "usr_users")
@@ -38,6 +37,10 @@ public class User extends BaseEntity implements Serializable, UserDetails {
     @NotNull
     @Column(nullable = false)
     private Boolean activated;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = "users", allowSetters = true)
+    private Set<UserAuthority> roles = new HashSet<>();
 
     public User() {
     }
@@ -99,6 +102,14 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 
     public void setActivated(Boolean activated) {
         this.activated = activated;
+    }
+
+    public Set<UserAuthority> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserAuthority> roles) {
+        this.roles = roles;
     }
 
     @Override

@@ -3,8 +3,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
 
-    <changeSet id="c8aaaf33-1af6-40c4-8a4d-ffa084eccc74" author="thiagoDepizzol">
-        <createTable tableName="usr_users_authorities">
+    <changeSet id="1802ea70-6e11-4fdd-a3ef-00bfaaf15e16" author="thiagoDepizzol">
+        <createTable tableName="med_consultations">
 
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -22,13 +22,26 @@
 
             <column name="last_modified_by" type="varchar(255)"/>
 
-            <column name="usr_user_id" type="bigint">
+            <column name="doctor_usr_user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="adm_module_id" type="bigint">
+            <column name="patient_usr_user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="consultation_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="start_time" type="time">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_time" type="time">
+                <constraints nullable="false"/>
+            </column>
+
 
         </createTable>
     </changeSet>

@@ -21,7 +21,13 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
     Optional<Module> findOneActiveTrueById(@Param("moduleId") Long moduleId);
 
     @Query(nativeQuery = true, //
-            value = "")
+            value = "select modules.* " +//
+                    "from adm_modules modules " +//
+                    "         join adm_roles roles on modules.adm_role_id = roles.id " +//
+                    "where modules.active = true " +//
+                    "  and roles.active = true " +//
+                    "  and roles.id = :roleId " +//
+                    "  and roles.status = 'ACTIVE' ")
     Optional<Module> findOneByRole(@Param("roleId") Long roleId);
 
 }

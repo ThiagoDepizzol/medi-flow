@@ -2,6 +2,8 @@ package com.medi.flow.service.administrative;
 
 import com.medi.flow.entity.administrative.Module;
 import com.medi.flow.entity.administrative.Role;
+import com.medi.flow.enumerated.ModuleType;
+import com.medi.flow.enumerated.Status;
 import com.medi.flow.repository.administrative.ModuleRepository;
 import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -67,27 +69,26 @@ public class ModuleService {
 
     }
 
-    public void verifyIfExistModuleWithType(@NotNull final Role role) {
+    public void verifyIfExistByRole(@NotNull final Role role, @NotNull final ModuleType type) {
 
-        logger.info("verifyIfExistModuleWithType() -> {}", role);
+        logger.info("verifyIfExistByRole() -> {}, {}", role, type);
 
         if (moduleRepository.findOneByRole(role.getId()).isEmpty()) {
 
-            newByRole(role);
+            final Module newModule = new Module();
+
+            newModule.setActive(true);
+            newModule.setRole(role);
+            newModule.setStatus(Status.ACTIVE);
+            newModule.setName(type.getName());
+            newModule.setView(true);
+            newModule.setCreated(true);
+            newModule.setEdit(true);
+            newModule.setDelete(true);
+
+            moduleRepository.save(newModule);
 
         }
-
-    }
-
-    public void newByRole(@NotNull final Role role) {
-
-        logger.info("newByRole() -> {}", role);
-
-        final Module newModule = new Module();
-
-        newModule.setName(role.getName());
-        newModule.setStatus(role.getStatus());
-        newModule.setRole(role);
 
     }
 
