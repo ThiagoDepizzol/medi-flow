@@ -21,4 +21,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneActiveTrueById(@Param("userId") Long userId);
 
     Optional<User> findByEmailAndActiveTrue(String email);
+
+    @Query("select u " +//
+            "from User u " +//
+            "        left join fetch u.roles r " +//
+            "        left join fetch r.module m " +//
+            "        left join fetch m.role role " +//
+            "where u.email = :email " +//
+            "  and u.active = true " +//
+            "  and r.active = true " +//
+            "  and m.active = true ")
+    Optional<User> findByEmailWithAuthorities(String email);
 }

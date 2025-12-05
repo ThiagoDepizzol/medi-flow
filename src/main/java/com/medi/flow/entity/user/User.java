@@ -1,10 +1,13 @@
 package com.medi.flow.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.medi.flow.entity.administrative.Module;
+import com.medi.flow.entity.administrative.Role;
 import com.medi.flow.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
@@ -114,7 +117,12 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return roles.stream()
+                .map(ua -> new SimpleGrantedAuthority(Optional.ofNullable(ua.getModule())
+                        .map(Module::getRole)
+                        .map(Role::getPrefix)
+                        .orElse(null)))
+                .toList();
     }
 
     @Override

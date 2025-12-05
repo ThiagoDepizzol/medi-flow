@@ -1,6 +1,7 @@
 package com.medi.flow.config;
 
 import com.medi.flow.service.administrative.ModuleTypeService;
+import com.medi.flow.service.user.UserApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,8 +16,11 @@ public class ApplicationStart implements CommandLineRunner {
 
     private final ModuleTypeService moduleTypeService;
 
-    public ApplicationStart(final ModuleTypeService moduleTypeService) {
+    private final UserApplicationService userApplicationService;
+
+    public ApplicationStart(final ModuleTypeService moduleTypeService, final UserApplicationService userApplicationService) {
         this.moduleTypeService = moduleTypeService;
+        this.userApplicationService = userApplicationService;
     }
 
     @Override
@@ -26,6 +30,7 @@ public class ApplicationStart implements CommandLineRunner {
             log.info("Starting configuration");
 
             moduleTypeService.verifyIfExistNewModuleType();
+            userApplicationService.newSystemAdminConfiguration();
 
 
         } catch (Exception exception) {

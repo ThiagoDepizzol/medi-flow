@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,6 +33,7 @@ public class ConsultationController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('MED_NURSE')")
     public ResponseEntity<ConsultationDTO> created(@RequestBody final Consultation consultation) {
 
         log.info("POST -> med/consultations -> {}", consultation);
@@ -42,6 +44,7 @@ public class ConsultationController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('MED_DOCTOR')")
     public ResponseEntity<ConsultationDTO> update(@PathVariable("id") final Long id, @RequestBody final Consultation consultation) {
 
         log.info("PUT -> med/consultations/{id} -> {}, {}", id, consultation);
@@ -53,6 +56,7 @@ public class ConsultationController {
 
     @GetMapping
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyAuthority('MED_DOCTOR', 'MED_NURSE')")
     public ResponseEntity<List<ConsultationDTO>> findAll(final Pageable page) {
 
         log.info("GET -> /med/consultations -> {}", page);
@@ -65,6 +69,7 @@ public class ConsultationController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyAuthority('MED_DOCTOR', 'MED_NURSE', 'MED_PATIENT')")
     public ResponseEntity<ConsultationDTO> findById(@PathVariable("id") final Long id) {
 
         log.info("GET -> /med/consultations/{id} -> {} ", id);

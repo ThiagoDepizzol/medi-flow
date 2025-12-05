@@ -30,4 +30,14 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
                     "  and roles.status = 'ACTIVE' ")
     Optional<Module> findOneByRole(@Param("roleId") Long roleId);
 
+    @Query(nativeQuery = true, //
+            value = "select modules.* " +//
+                    "from adm_modules modules " +//
+                    "         join adm_roles roles on modules.adm_role_id = roles.id " +//
+                    "where modules.active = true " +//
+                    "  and roles.active = true " +//
+                    "  and roles.prefix = 'SYSTEM_ADMIN' " +//
+                    "limit 1 ")
+    Optional<Module> findOneSystemAdmin();
+
 }
