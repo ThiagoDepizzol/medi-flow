@@ -65,4 +65,12 @@ public class ConsultationService {
         consultationRepository.save(consultation);
 
     }
+
+    @Transactional(readOnly = true)
+    public Page<Consultation> getAllByPatient(@NotNull final Long patientId, @NotNull final Pageable pageable) {
+
+        logger.info("getAllByPatient() -> {}, {}", pageable, patientId);
+
+        return consultationRepository.getAllByPatient(patientId, pageable);
+    }
 }

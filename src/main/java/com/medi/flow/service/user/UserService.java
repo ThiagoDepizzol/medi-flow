@@ -48,11 +48,27 @@ public class UserService {
 
     }
 
-    public Optional<User> update(@NotNull final Long id, @NotNull final User user) {
+    public Optional<User> update(@NotNull final User oldUser, @NotNull final User newUser) {
 
-        logger.info("update() -> {}, {}", id, user);
+        logger.info("update() -> {}, {}", oldUser, newUser);
 
-        return Optional.of(userRepository.save(user));
+        oldUser.setFirstName(newUser.getFirstName());
+        oldUser.setLastName(newUser.getLastName());
+        oldUser.setEmail(newUser.getEmail());
+        oldUser.setActive(newUser.getActive());
+
+        final List<UserAuthority> roles = Optional.ofNullable(newUser.getRoles())
+                .map(ArrayList::new)
+                .orElseGet(ArrayList::new);
+        oldUser.setRoles(null);
+
+        return Optional.of(userRepository.save(oldUser))
+                .map(savedUser -> {
+
+                    userAuthorityService.saveAllAndFlush(savedUser, roles);
+
+                    return savedUser;
+                });
 
     }
 

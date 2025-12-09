@@ -1,53 +1,28 @@
-package com.medi.flow.entity.administrative;
+package com.medi.flow.dto.administrative;
 
-import com.medi.flow.entity.base.BaseEntity;
 import com.medi.flow.enumerated.Status;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-@Entity
-@Table(name = "adm_modules")
-public class Module extends BaseEntity implements Serializable {
+public class ModuleDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(nullable = false)
     private String name;
 
-    @JoinColumn(name = "adm_role_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Role role;
-
-    @NotNull
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private Status status;
 
     private String description;
 
-    @NotNull
-    @Column(unique = true)
     private Boolean view;
 
-    @NotNull
-    @Column(unique = true)
     private Boolean created;
 
-    @NotNull
-    @Column(unique = true)
     private Boolean edit;
 
-    @NotNull
-    @Column(unique = true)
     private Boolean delete;
 
-    public Module() {
+    public ModuleDTO() {
     }
 
     public Long getId() {
@@ -64,14 +39,6 @@ public class Module extends BaseEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public Status getStatus() {
@@ -121,17 +88,4 @@ public class Module extends BaseEntity implements Serializable {
     public void setDelete(Boolean delete) {
         this.delete = delete;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Module role = (Module) o;
-        return Objects.equals(id, role.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
 }

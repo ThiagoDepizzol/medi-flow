@@ -4,6 +4,8 @@ public class UserDTO {
 
     private Long id;
 
+    private Boolean active;
+
     private String firstName;
 
     private String lastName;
@@ -21,6 +23,14 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public String getFirstName() {

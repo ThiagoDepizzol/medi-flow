@@ -38,7 +38,11 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/reset-password").permitAll()
+                        .requestMatchers(
+                                "/login",
+                                "/reset-password"
+                        )
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
                 .httpBasic(withDefaults());
@@ -50,4 +54,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(final AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
 }

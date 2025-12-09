@@ -33,7 +33,7 @@ public class ConsultationController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('MED_NURSE')")
+    @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN', 'MED_NURSE')")
     public ResponseEntity<ConsultationDTO> created(@RequestBody final Consultation consultation) {
 
         log.info("POST -> med/consultations -> {}", consultation);
@@ -44,7 +44,7 @@ public class ConsultationController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('MED_DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN','MED_DOCTOR')")
     public ResponseEntity<ConsultationDTO> update(@PathVariable("id") final Long id, @RequestBody final Consultation consultation) {
 
         log.info("PUT -> med/consultations/{id} -> {}, {}", id, consultation);
@@ -56,7 +56,7 @@ public class ConsultationController {
 
     @GetMapping
     @Transactional(readOnly = true)
-    @PreAuthorize("hasAnyAuthority('MED_DOCTOR', 'MED_NURSE')")
+    @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN','MED_DOCTOR', 'MED_NURSE')")
     public ResponseEntity<List<ConsultationDTO>> findAll(final Pageable page) {
 
         log.info("GET -> /med/consultations -> {}", page);
@@ -69,7 +69,7 @@ public class ConsultationController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
-    @PreAuthorize("hasAnyAuthority('MED_DOCTOR', 'MED_NURSE', 'MED_PATIENT')")
+    @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN','MED_DOCTOR', 'MED_NURSE', 'MED_PATIENT')")
     public ResponseEntity<ConsultationDTO> findById(@PathVariable("id") final Long id) {
 
         log.info("GET -> /med/consultations/{id} -> {} ", id);
@@ -89,5 +89,18 @@ public class ConsultationController {
 
         return ResponseEntity.noContent()
                 .build();
+    }
+
+    @GetMapping("/all-by-patient/{patientId}")
+    @Transactional(readOnly = true)
+    @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN', 'MED_DOCTOR', 'MED_NURSE', 'MED_PATIENT')")
+    public ResponseEntity<List<ConsultationDTO>> getAllByPatient(final @PathVariable("patientId") Long patientId, final Pageable page) {
+
+        log.info("GET -> /med/consultations/all-by-patient/{id} -> {}, {}", patientId, page);
+
+        return ResponseEntity.ok(consultationService.getAllByPatient(patientId, page)
+                .stream()
+                .map(consultationMapper::fromDto)
+                .collect(Collectors.toList()));
     }
 }

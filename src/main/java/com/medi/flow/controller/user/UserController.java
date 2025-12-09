@@ -46,8 +46,9 @@ public class UserController {
 
         log.info("PUT -> usr/users/{id} -> {}, {}", id, user);
 
-        return ResponseEntity.ok(userService.update(id, user)
-                .map(userMapper::fromDto)
+        return ResponseEntity.ok(userService.findById(id)
+                .flatMap(bdUser -> userService.update(bdUser, user)
+                        .map(userMapper::fromDto))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot update user")));
     }
 

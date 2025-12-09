@@ -16,7 +16,7 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
     @Query(nativeQuery = true,
             value = "select modules.* " +//
                     "from adm_modules modules " +//
-                    "where roles.active = true " +//
+                    "where modules.active = true " +//
                     "  and modules.id = :moduleId ")
     Optional<Module> findOneActiveTrueById(@Param("moduleId") Long moduleId);
 
