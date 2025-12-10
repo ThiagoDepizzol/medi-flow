@@ -42,7 +42,7 @@ public class ModuleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ModuleDTO> update(@PathVariable("id") final Long id, @RequestBody final Module module) {
+    public ResponseEntity<ModuleDTO> update(@PathVariable final Long id, @RequestBody final Module module) {
 
         log.info("PUT -> usr/modules/{id} -> {}, {}", id, module);
 
@@ -65,7 +65,7 @@ public class ModuleController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
-    public ResponseEntity<ModuleDTO> findById(@PathVariable("id") final Long id) {
+    public ResponseEntity<ModuleDTO> findById(@PathVariable final Long id) {
 
         log.info("GET -> /usr/modules/{id} -> {} ", id);
 
@@ -75,7 +75,7 @@ public class ModuleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<?> delete(@PathVariable final Long id) {
 
         log.info("DELETE -> usr/modules/{id} -> {}", id);
 

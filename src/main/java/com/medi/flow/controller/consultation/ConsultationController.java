@@ -45,7 +45,7 @@ public class ConsultationController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN','MED_DOCTOR')")
-    public ResponseEntity<ConsultationDTO> update(@PathVariable("id") final Long id, @RequestBody final Consultation consultation) {
+    public ResponseEntity<ConsultationDTO> update(@PathVariable final Long id, @RequestBody final Consultation consultation) {
 
         log.info("PUT -> med/consultations/{id} -> {}, {}", id, consultation);
 
@@ -70,7 +70,7 @@ public class ConsultationController {
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN','MED_DOCTOR', 'MED_NURSE', 'MED_PATIENT')")
-    public ResponseEntity<ConsultationDTO> findById(@PathVariable("id") final Long id) {
+    public ResponseEntity<ConsultationDTO> findById(@PathVariable final Long id) {
 
         log.info("GET -> /med/consultations/{id} -> {} ", id);
 
@@ -80,7 +80,7 @@ public class ConsultationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<?> delete(@PathVariable final Long id) {
 
         log.info("DELETE -> med/consultations/{id} -> {}", id);
 
@@ -94,7 +94,7 @@ public class ConsultationController {
     @GetMapping("/all-by-patient/{patientId}")
     @Transactional(readOnly = true)
     @PreAuthorize("hasAnyAuthority('SYSTEM_ADMIN', 'MED_DOCTOR', 'MED_NURSE', 'MED_PATIENT')")
-    public ResponseEntity<List<ConsultationDTO>> getAllByPatient(final @PathVariable("patientId") Long patientId, final Pageable page) {
+    public ResponseEntity<List<ConsultationDTO>> getAllByPatient(@PathVariable final Long patientId, final Pageable page) {
 
         log.info("GET -> /med/consultations/all-by-patient/{id} -> {}, {}", patientId, page);
 

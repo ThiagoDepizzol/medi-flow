@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable("id") final Long id, @RequestBody final User user) {
+    public ResponseEntity<UserDTO> update(@PathVariable final Long id, @RequestBody final User user) {
 
         log.info("PUT -> usr/users/{id} -> {}, {}", id, user);
 
@@ -66,7 +66,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
-    public ResponseEntity<UserDTO> findById(@PathVariable("id") final Long id) {
+    public ResponseEntity<UserDTO> findById(@PathVariable final Long id) {
 
         log.info("GET -> /usr/users/{id} -> {} ", id);
 
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<?> delete(@PathVariable final Long id) {
 
         log.info("DELETE -> usr/users/{id} -> {}", id);
 
