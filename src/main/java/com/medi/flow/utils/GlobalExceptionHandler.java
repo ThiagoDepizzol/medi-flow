@@ -1,8 +1,6 @@
 package com.medi.flow.utils;
 
-import com.medi.flow.utils.exceptions.InvalidCredentialsException;
-import com.medi.flow.utils.exceptions.InvalidPasswordException;
-import com.medi.flow.utils.exceptions.UserNotFoundException;
+import com.medi.flow.utils.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +42,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleInvalidCredentials(final UserNotFoundException ex, final HttpServletRequest request) {
         final ErrorResponseDTO response = new ErrorResponseDTO(HttpStatus.NOT_FOUND, ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(UserIsNotDoctorException.class)
+    public ResponseEntity<String> handleUserIsNotDoctor(UserIsNotDoctorException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserIsNotPatientException.class)
+    public ResponseEntity<String> handleUserIsNotPatient(UserIsNotPatientException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

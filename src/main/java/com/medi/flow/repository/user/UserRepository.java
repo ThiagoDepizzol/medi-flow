@@ -32,4 +32,22 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "  and r.active = true " +//
             "  and m.active = true ")
     Optional<User> findByEmailWithAuthorities(String email);
+
+    @Query(nativeQuery = true,
+            value = "select users.* " +//
+                    "from usr_users users " +//
+                    "where users.active = true " +//
+                    "  and users.id = :userId " +//
+                    "  and (exists(select 1 " +//
+                    "              from usr_users_authorities sub_authorities " +//
+                    "                       join adm_modules sub_modules " +//
+                    "                            on sub_authorities.adm_module_id = sub_modules.id " +//
+                    "                                and sub_modules.active = true " +//
+                    "                       join adm_roles sub_roles " +//
+                    "                            on sub_modules.adm_role_id = sub_roles.id " +//
+                    "                                and sub_roles.active = true " +//
+                    "              where sub_authorities.active = true " +//
+                    "                and users.id = sub_authorities.usr_user_id " +//
+                    "                and sub_roles.name = :authority)) ")
+    Optional<User> findByIdAndAuthority(@Param("userId") Long userId, @Param("authority") String authority);
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +21,14 @@ public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    public final PasswordEncoder encoder;
+
     public final UserRepository userRepository;
 
     public final UserAuthorityService userAuthorityService;
 
-    public UserService(final UserRepository userRepository, final UserAuthorityService userAuthorityService) {
+    public UserService(final PasswordEncoder encoder, final UserRepository userRepository, final UserAuthorityService userAuthorityService) {
+        this.encoder = encoder;
         this.userRepository = userRepository;
         this.userAuthorityService = userAuthorityService;
     }
@@ -33,6 +37,8 @@ public class UserService {
 
         logger.info("created() -> {}", user);
 
+        user.setPassword(encoder.encode(user.getPassword()));
+        
         final List<UserAuthority> roles = Optional.ofNullable(user.getRoles())
                 .map(ArrayList::new)
                 .orElseGet(ArrayList::new);

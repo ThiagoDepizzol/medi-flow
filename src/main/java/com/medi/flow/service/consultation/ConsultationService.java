@@ -5,16 +5,23 @@ import com.medi.flow.entity.consultation.Consultation;
 import com.medi.flow.entity.user.User;
 import com.medi.flow.repository.consultation.ConsultationRepository;
 import com.medi.flow.service.consultation.producer.ConsultationProducer;
+import com.medi.flow.utils.consultation.ConsultationValidationService;
 import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -22,11 +29,14 @@ public class ConsultationService {
 
     private static final Logger logger = LoggerFactory.getLogger(ConsultationService.class);
 
+    private final ConsultationValidationService consultationValidationService;
+
     public final ConsultationRepository consultationRepository;
 
     public final ConsultationProducer consultationProducer;
 
-    public ConsultationService(final ConsultationRepository consultationRepository, final ConsultationProducer consultationProducer) {
+    public ConsultationService(final ConsultationValidationService consultationValidationService, final ConsultationRepository consultationRepository, final ConsultationProducer consultationProducer) {
+        this.consultationValidationService = consultationValidationService;
         this.consultationRepository = consultationRepository;
         this.consultationProducer = consultationProducer;
     }
@@ -36,12 +46,16 @@ public class ConsultationService {
 
         logger.info("created() -> {}", consultation);
 
+        consultationValidationService.userIsDoctor(consultation.getDoctor());
+
+        consultationValidationService.userIsPatient(consultation.getPatient());
+
         return Optional.of(consultationRepository.save(consultation))
-                .map(savedConsultation -> {
+                .map(createdConsultation -> {
 
-                    emitConsultationCreatedEvent(savedConsultation);
+                    emitConsultationCreatedEvent(createdConsultation, true);
 
-                    return savedConsultation;
+                    return createdConsultation;
                 });
 
     }
@@ -50,7 +64,18 @@ public class ConsultationService {
 
         logger.info("update() -> {}, {}", id, consultation);
 
-        return Optional.of(consultationRepository.save(consultation));
+        consultationValidationService.userIsDoctor(consultation.getDoctor());
+
+        consultationValidationService.userIsPatient(consultation.getPatient());
+
+        return Optional.of(consultationRepository.save(consultation))
+                .map(updatedConsultation -> {
+
+                    emitConsultationCreatedEvent(updatedConsultation, false);
+
+                    return updatedConsultation;
+
+                });
 
     }
 
@@ -89,9 +114,19 @@ public class ConsultationService {
         return consultationRepository.getAllByPatient(patientId, pageable);
     }
 
-    public void emitConsultationCreatedEvent(@NotNull final Consultation consultation) {
+    public void emitConsultationCreatedEvent(@NotNull final Consultation consultation, @NotNull final Boolean isNew) {
 
-        logger.info("emitConsultationCreatedEvent() -> {}", consultation);
+        logger.info("emitConsultationCreatedEvent() -> {}, {}", consultation, isNew);
+
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        final ZoneId zone = ZoneId.of("America/Sao_Paulo");
+
+        final LocalDate consultationDate = Optional.ofNullable(consultation.getConsultationDate())
+                .map(date -> date.atZone(zone))
+                .map(ZonedDateTime::toLocalDate)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Consultation date not found"));
 
         final ConsultationEventDTO newDto = new ConsultationEventDTO();
 
@@ -105,9 +140,15 @@ public class ConsultationService {
                 .map(User::getUsername)
                 .orElse(""));
 
-        newDto.setConsultationDate(consultation.getConsultationDate());
-        newDto.setStartTime(consultation.getStartTime());
-        newDto.setEndTime(consultation.getEndTime());
+        newDto.setConsultationDate(consultationDate.format(dateFormatter));
+        newDto.setStartTime(consultation.getStartTime().format(timeFormatter));
+        newDto.setEndTime(consultation.getEndTime().format(timeFormatter));
+
+        newDto.setPatientEmail(Optional.ofNullable(consultation.getPatient())
+                .map(User::getEmail)
+                .orElse(""));
+
+        newDto.setIsNew(isNew);
 
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override

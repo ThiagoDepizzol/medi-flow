@@ -1,8 +1,6 @@
 package com.medi.flow.dto.consultation;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalTime;
 
 public class ConsultationEventDTO implements Serializable {
 
@@ -12,11 +10,15 @@ public class ConsultationEventDTO implements Serializable {
 
     private String patientName;
 
-    private Instant consultationDate;
+    private String patientEmail;
 
-    private LocalTime startTime;
+    private String consultationDate;
 
-    private LocalTime endTime;
+    private String startTime;
+
+    private String endTime;
+
+    private Boolean isNew;
 
     public ConsultationEventDTO() {
     }
@@ -45,27 +47,51 @@ public class ConsultationEventDTO implements Serializable {
         this.patientName = patientName;
     }
 
-    public Instant getConsultationDate() {
+    public String getPatientEmail() {
+        return patientEmail;
+    }
+
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail = patientEmail;
+    }
+
+    public String getConsultationDate() {
         return consultationDate;
     }
 
-    public void setConsultationDate(Instant consultationDate) {
+    public void setConsultationDate(String consultationDate) {
         this.consultationDate = consultationDate;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public Boolean getNew() {
+        return isNew;
+    }
+
+    public void setNew(Boolean aNew) {
+        isNew = aNew;
+    }
+
+    public Boolean getIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(Boolean aNew) {
+        isNew = aNew;
     }
 }
