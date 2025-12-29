@@ -1,9 +1,10 @@
 package com.medi.flow.dto.consultation;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalTime;
 
-public class ConsultationEventDTO {
+public class ConsultationEventDTO implements Serializable {
 
     private Long id;
 

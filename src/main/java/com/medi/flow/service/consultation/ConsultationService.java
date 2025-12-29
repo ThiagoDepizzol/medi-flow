@@ -31,6 +31,7 @@ public class ConsultationService {
         this.consultationProducer = consultationProducer;
     }
 
+    @Transactional
     public Optional<Consultation> created(@NotNull final Consultation consultation) {
 
         logger.info("created() -> {}", consultation);
