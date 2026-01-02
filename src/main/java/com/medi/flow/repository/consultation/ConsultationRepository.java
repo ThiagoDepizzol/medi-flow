@@ -37,7 +37,8 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
                     "         join usr_users patients " +//
                     "              on consultations.patient_usr_user_id = patients.id " +//
                     "                  and patients.active = true " +//
-                    "where consultations.active = true " +//
+                    "where consultations.active = true " +
+                    "  and patients.id = :patientId " +//
                     "  and ((:onlyFuture = false) " +//
                     "    or consultations.consultation_date >= :currentDate) " +//
                     "order by consultations.consultation_date")
