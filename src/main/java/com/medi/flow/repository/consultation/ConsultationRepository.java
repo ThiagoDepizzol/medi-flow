@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 public interface ConsultationRepository extends JpaRepository<Consultation, Long> {
@@ -28,4 +30,18 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
                     "  and patients.active = true " +//
                     "  and patients.id = :patientId")
     Page<Consultation> getAllByPatient(@Param("patientId") Long patientId, Pageable pageable);
+
+    @Query(nativeQuery = true, //
+            value = "select consultations.* " +//
+                    "from med_consultations consultations " +//
+                    "         join usr_users patients " +//
+                    "              on consultations.patient_usr_user_id = patients.id " +//
+                    "                  and patients.active = true " +//
+                    "where consultations.active = true " +//
+                    "  and ((:onlyFuture = false) " +//
+                    "    or consultations.consultation_date >= :currentDate) " +//
+                    "order by consultations.consultation_date")
+    List<Consultation> getAllHistoryByPatient(@Param("patientId") Long patientId,
+                                              @Param("onlyFuture") boolean onlyFuture,
+                                              @Param("currentDate") Instant currentDate);
 }

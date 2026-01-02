@@ -1,0 +1,15 @@
+type Query {
+    getAllHistoryByPatient(
+        patientId: ID!
+        onlyFuture: Boolean = false
+    ): [Consultation!]!
+}
+
+type Consultation {
+    id: ID!
+    consultationDate: String!
+    startTime: String!
+    endTime: String!
+    doctorName: String!
+    patientName: String!
+}

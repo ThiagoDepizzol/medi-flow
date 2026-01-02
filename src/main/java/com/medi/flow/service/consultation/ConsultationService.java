@@ -18,10 +18,12 @@ import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -104,6 +106,16 @@ public class ConsultationService {
 
         consultationRepository.save(consultation);
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<Consultation> getAllHistoryByPatient(@NotNull final Long patientId, final Boolean onlyFuture) {
+
+        logger.info("getAllHistoryByPatient() -> {}, {}", patientId, onlyFuture);
+
+        final Instant currentDate = Instant.now();
+
+        return consultationRepository.getAllHistoryByPatient(patientId, onlyFuture, currentDate);
     }
 
     @Transactional(readOnly = true)
