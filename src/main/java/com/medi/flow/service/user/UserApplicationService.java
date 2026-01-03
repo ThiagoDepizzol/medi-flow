@@ -27,7 +27,8 @@ public class UserApplicationService {
     public final ModuleRepository moduleRepository;
 
     @Lazy
-    public UserApplicationService(final UserService userService, final UserRepository userRepository, final PasswordEncoder encoder, final ModuleRepository moduleRepository) {
+    public UserApplicationService(final UserService userService, final UserRepository userRepository,
+            final PasswordEncoder encoder, final ModuleRepository moduleRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.encoder = encoder;
@@ -43,7 +44,8 @@ public class UserApplicationService {
         if (userRepository.findByEmailAndActiveTrue("admin@fiap.com.br").isEmpty()) {
 
             final Module adminModule = moduleRepository.findOneSystemAdmin()
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot find system admin module"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                            "Cannot find system admin module"));
 
             final User admin = new User();
 
@@ -52,7 +54,7 @@ public class UserApplicationService {
             admin.setFirstName("admin");
             admin.setLastName("admin");
             admin.setEmail("admin@fiap.com.br");
-            admin.setPassword(encoder.encode("admin"));
+            admin.setPassword("admin");
             admin.setLastModifiedDate(Instant.now());
 
             admin.setRoles(new HashSet<>());
@@ -67,6 +69,5 @@ public class UserApplicationService {
             userService.created(admin);
         }
     }
-
 
 }
