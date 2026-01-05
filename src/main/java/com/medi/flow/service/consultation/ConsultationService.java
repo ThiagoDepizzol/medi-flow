@@ -62,6 +62,7 @@ public class ConsultationService {
 
     }
 
+    @Transactional
     public Optional<Consultation> update(@NotNull final Long id, @NotNull final Consultation consultation) {
 
         logger.info("update() -> {}, {}", id, consultation);
